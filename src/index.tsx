@@ -11,7 +11,7 @@ import { setContext } from "@apollo/client/link/context";
 import App from "./App";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:5000/graphql",
+  uri: process.env.REACT_APP_SERVER_URL,
 });
 
 const authLink = setContext(() => {
@@ -25,19 +25,7 @@ const authLink = setContext(() => {
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache({
-    // typePolicies: {
-    //   Query: {
-    //     fields: {
-    //       getPosts: {
-    //         merge(existing, incoming) {
-    //           return incoming;
-    //         },
-    //       },
-    //     },
-    //   },
-    // },
-  }),
+  cache: new InMemoryCache({}),
 });
 
 const root = ReactDOM.createRoot(
